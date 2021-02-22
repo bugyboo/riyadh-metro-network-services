@@ -41,7 +41,24 @@ public class RoutePoint {
 	@Transient
 	public double distance;
     
-  //======================== GETTERS/SETTERS ========================//    
+  //======================== GETTERS/SETTERS ========================//
+
+  public RoutePoint() {
+	  super();
+  }
+  
+  public RoutePoint( RoutePoint rp ) {
+	  if ( rp != null ) {
+		this.id = rp.id;
+		this.lat = rp.lat;
+		this.lng = rp.lng;
+		this.routes = rp.routes;
+		this.station = rp.station;
+		this.routesIds = rp.routesIds;
+		this.stationId = rp.stationId;
+		this.distance = rp.distance;
+	  }
+  }
 
 	public Long getId() {
 		return id;

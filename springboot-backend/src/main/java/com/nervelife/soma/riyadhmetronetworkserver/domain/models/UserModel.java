@@ -1,21 +1,14 @@
-package com.nervelife.soma.riyadhmetronetworkserver.domain.presist;
+package com.nervelife.soma.riyadhmetronetworkserver.domain.models;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+public class UserModel {
 
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-
-@Entity(name = "USERS")
-public class User {
-
-    @Id
-	@Column(length=60)
+    @NotEmpty
+	@NotNull
     private String username;
     
-    @JsonIgnore
     private String password;
     
     private String role;
@@ -39,7 +32,7 @@ public class User {
     }
 
     public void setPassword(String password) {
-        this.password = new BCryptPasswordEncoder().encode(password);
+        this.password = password;
     }
 
     public String getRole() {

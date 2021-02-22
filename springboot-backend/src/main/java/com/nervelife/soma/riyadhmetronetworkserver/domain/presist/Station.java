@@ -50,6 +50,21 @@ public class Station {
 	
 	//======================== GETTERS/SETTERS ========================//
 
+	public Station() {
+		super();
+	}
+
+	public Station( Station station ) {
+		if (station != null) {
+			this.id = station.id;
+			this.name = station.name;
+			this.nameArabic = station.nameArabic;
+			this.stationCode = station.stationCode;
+			this.stationType = station.stationType;
+			this.routePoint = new RoutePoint( station.routePoint );
+		}
+	}
+
 	public Long getId() {
 		return id;
 	}
