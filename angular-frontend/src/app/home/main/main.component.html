@@ -1,0 +1,158 @@
+<mat-card-title>Riyadh Metro Network Services</mat-card-title>
+<mat-card-subtitle>Find the shortest distence on this network between two stations</mat-card-subtitle>
+<mat-card-content>
+
+  <p class="text-muted">
+      Please, select departure and destination :
+  </p>
+
+  <form [formGroup]="searchForm" class="search-form">
+
+    <div fxLayout="row" fxLayoutWrap>
+      <mat-form-field fxFlex="50%">
+          <input matInput placeholder="Departure Station " name="departureStation"
+              [matAutocomplete]="departures" formControlName="departureControl" required>
+              <mat-autocomplete #departures="matAutocomplete" [displayWith]="displayStation">
+                  <mat-option *ngFor="let station of filteredDepartues | async" [value]="station">
+                          {{station.stationCode}} - {{station.name}}
+                  </mat-option>
+          </mat-autocomplete>
+      </mat-form-field>
+      <mat-icon *ngIf="searchForm.valid" class="ac-action-icon" (click)="removeDeparture()">highlight_off</mat-icon>
+    </div>
+
+    <div fxLayout="row" fxLayoutWrap>
+      <mat-form-field fxFlex="50%">
+          <input matInput placeholder="Destination Station" name="destStation"
+              [matAutocomplete]="destinations" formControlName="destControl" required>
+              <mat-autocomplete #destinations="matAutocomplete" [displayWith]="displayStation">
+              <mat-option *ngFor="let station of filteredDestinations | async" [value]="station">
+                      {{station.stationCode}} - {{station.name}}
+              </mat-option>
+          </mat-autocomplete>
+      </mat-form-field>
+      <mat-icon *ngIf="searchForm.valid" class="ac-action-icon" (click)="removeDestination()">highlight_off</mat-icon>
+    </div>
+
+    <div class="text-center">
+      <button mat-raised-button color="primary" (click)="searchPathRoute()" [disabled]="!searchForm.valid" class="action-btn">Search</button>
+      <button mat-raised-button color="warn" (click)="clearSearch()" [disabled]="!searchResult" class="action-btn">Clear</button>
+    </div>
+
+  </form>
+
+  <div *ngIf="searchResult" class="path-result">
+
+    <div *ngFor="let prr of searchResult.pathRoutes">
+
+      <div class="totals-item">
+        <span> Total Distance : {{prr.distance}} Meters</span>
+      </div>
+
+      <mat-expansion-panel [expanded]="true" *ngFor="let prrs of prr.segments" class="totals-item">
+            <mat-expansion-panel-header class="top-space">
+              <mat-panel-title>
+                  <mat-icon class="primary-color">directions_subway</mat-icon>
+              </mat-panel-title>
+              <mat-panel-description>
+                  <span class="result-header-label"> {{prrs.startStation.name}} </span>
+                  <mat-icon>arrow_forward</mat-icon>
+                  <span class="result-header-label"> {{prrs.endStation.name}} </span>
+                  <mat-icon>timeline</mat-icon>
+                  <span class="result-header-label" [style.color]="getRouteColor(prrs.routeId)">
+                      {{getRouteName(prrs.routeId)}} </span>
+              </mat-panel-description>
+            </mat-expansion-panel-header>
+
+              <mat-form-field class="result-content">
+                  <span>{{prrs.startStation.selectedTimeId}}</span>
+                  <mat-select [(ngModel)]="prrs.startStation.selectedTimeId"
+                    (selectionChange)="doSelectChange(prrs.startStation, prrs.startStation.selectedTimeId)">
+                      <mat-option *ngFor="let times of prrs.startStation.times" value="{{times.timeId}}">
+                          {{times.hour}} : {{times.minute}}
+                      </mat-option>
+                  </mat-select>
+              </mat-form-field>
+
+              <div *ngFor="let prrsp of prrs.points" class="result-content">
+                  <div class="seg-st-row" [style.border-left-color]="getRouteColor(prrs.routeId)">
+                      <span *ngIf="prrsp.routePoint.station">
+                          <span class="result-header-label"> {{prrsp.routePoint.station.name}} </span>
+                          <mat-icon>arrow_forward</mat-icon>
+                          <span class="result-header-label" *ngIf="prrsp.routePoint.station.selectedTime" class="result-header-label">
+                              <span> {{prrsp.routePoint.station.selectedTime.hour}} : {{prrsp.routePoint.station.selectedTime.minute}} </span>
+                              <mat-icon>arrow_forward</mat-icon>
+                              <span>Trip Time : {{prrsp.routePoint.station.selectedTime.tripMinutes}} Minutes </span>
+                          </span>
+                      </span>
+                  </div>
+              </div>
+
+              <div class="totals-item result-content top-space">
+                  <span> Distance : {{prrs.distance}} Meters</span>
+              </div>
+
+      </mat-expansion-panel>
+
+    </div>
+
+
+  </div>
+
+  <div class="rta-map">
+    <agm-map [latitude]="lat" [longitude]="lng" [zoom]="zoom" (mapClick)="onMapClick($event)">
+
+        <agm-circle [latitude]="lat" [longitude]="lng" (markerClick)="onMarkerClick($event)"
+            [radius]="1000"
+            [fillColor]="'blue'"
+            [circleDraggable]="false"
+            [editable]="false">
+
+        </agm-circle>
+
+        <agm-marker *ngFor="let st of allStations"
+            [latitude]="st.routePoint?.lat" [longitude]="st.routePoint?.lng"
+              (markerClick)="onMarkerClick($event)"
+            [title]="st.name"
+            iconUrl="../../assets/images/station-26.png" openInfoWindow="true">
+
+            <agm-info-window [disableAutoPan]="false">
+                 {{st.name}} <strong>{{st.stationCode}}</strong>
+                <div>
+                    <button mat-button (click)="setDestination(st)">Destination</button>
+                    <button mat-button (click)="setDeparture(st)">Departure</button>
+                </div>
+            </agm-info-window>
+
+        </agm-marker>
+
+        <agm-polyline *ngFor="let r of allRoutes"
+                [strokeColor]="r.routeColor" strokeOpacity="0.5" strokeWeight="10">
+            <agm-polyline-point *ngFor="let rpp of r.routePointsPath"
+                        [latitude]="rpp.routePoint.lat" [longitude]="rpp.routePoint.lng">
+            </agm-polyline-point>
+        </agm-polyline>
+
+        <div *ngIf="searchResult">
+            <div *ngFor="let prr of searchResult.pathRoutes">
+                <agm-polyline *ngFor="let prrs of prr.segments"
+                        strokeColor="green" strokeOpacity="1" strokeWeight="2">
+                    <agm-polyline-point *ngFor="let prrsp of prrs.points"
+                                [latitude]="prrsp.routePoint.lat" [longitude]="prrsp.routePoint.lng">
+                    </agm-polyline-point>
+                </agm-polyline>
+            </div>
+        </div>
+
+    </agm-map>
+  </div>
+
+</mat-card-content>
+<mat-divider></mat-divider>
+<mat-card-actions>
+    <button mat-button color="primary" class="text-upper">
+      <mat-icon>navigation</mat-icon>
+      Start
+    </button>
+</mat-card-actions>
+

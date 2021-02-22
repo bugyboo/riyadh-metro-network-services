@@ -1,0 +1,47 @@
+<div>
+  <h2 mat-dialog-title>Insert or update User profiles</h2>
+  <mat-dialog-content>
+
+      <form #saveUserForm="ngForm">
+
+          <div>
+              <mat-form-field fxFlex="50%">
+                  <input matInput placeholder="Username" required
+                     [(ngModel)]="data.username" name="userName" [disabled]="isUpdate">
+              </mat-form-field>
+          </div>
+
+          <div>
+              <mat-form-field fxFlex="100%">
+                  <input matInput placeholder="Full Name" required
+                     [(ngModel)]="data.fullName" id="fullName" name="fullName">
+              </mat-form-field>
+          </div>
+
+          <div>
+              <mat-form-field fxFlex="100%">
+                  <input matInput type="password" placeholder="Password"
+                     [(ngModel)]="data.password" id="password" name="password">
+              </mat-form-field>
+          </div>
+
+          <div>
+              <mat-form-field fxFlex="50%">
+                  <mat-select placeholder=" Role " required
+                     [(ngModel)]="data.role" name="role" id="role">
+                  <mat-option *ngFor="let role of roles" [value]="role.role">
+                    {{ role.desc }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+          </div>
+
+      </form>
+
+  </mat-dialog-content>
+  <mat-dialog-actions>
+  <button mat-raised-button color="primary" [disabled]="!saveUserForm.form.valid"
+          [mat-dialog-close]="data" tabindex="1">Save</button>
+  <button mat-raised-button mat-dialog-close tabindex="-1">No, Cancel</button>
+  </mat-dialog-actions>
+</div>

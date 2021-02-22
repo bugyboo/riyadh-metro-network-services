@@ -1,0 +1,37 @@
+<td-layout>
+  <td-navigation-drawer flex sidenavTitle="Menu" [name]="user?.fullName" [email]="user?.username">
+    <mat-nav-list>
+      <a mat-list-item [routerLink]="['/']"><mat-icon>home</mat-icon>Home</a>
+      <a mat-list-item [routerLink]="['/login']" *ngIf="user == undefined"><mat-icon>perm_identity</mat-icon>Sign in</a>
+      <a mat-list-item [routerLink]="['/trains']" *ngIf="user !== undefined"><mat-icon>directions_subway</mat-icon>Trains</a>
+      <a mat-list-item [routerLink]="['/users']" *ngIf="userHasRoleAdmin()"><mat-icon>people</mat-icon>Users</a>
+    </mat-nav-list>
+    <div td-navigation-drawer-menu *ngIf="user">
+      <mat-nav-list>
+        <a mat-list-item (click)="doLogout()"><mat-icon>perm_identity</mat-icon>Logout</a>
+      </mat-nav-list>
+    </div>
+  </td-navigation-drawer>
+  <td-layout-nav toolbarTitle="RMNS" navigationRoute="/">
+    <div td-toolbar-content layout="row" layout-align="start center" fxFlex>
+      <button mat-icon-button td-menu-button tdLayoutToggle>
+        <mat-icon>menu</mat-icon>
+      </button>
+      <span fxFlex></span>
+      <a mat-icon-button matTooltip="Language" [routerLink]="['/home?lang=ar']" class="nav-button">
+        <mat-icon>language</mat-icon>
+        <span>عربي</span>
+      </a>
+    </div>
+    <td-layout-card-over>
+
+          <router-outlet></router-outlet>
+
+    </td-layout-card-over>
+    <td-layout-footer color="primary">
+      <div class="footer">
+          <label class="text-center"> Copyright © NerveLife. All Rights Reserved </label>
+      </div>
+    </td-layout-footer>
+  </td-layout-nav>
+</td-layout>

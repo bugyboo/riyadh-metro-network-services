@@ -1,0 +1,48 @@
+
+<div class="page-wrap full-height bg-primary-color">
+
+  <div class="session-form-hold">
+
+      <mat-progress-bar [mode]="loadingMode">
+      </mat-progress-bar>
+
+      <mat-card>
+          <mat-card-header class="text-center text-muted">
+              NerveLife
+          </mat-card-header >
+          <mat-card-title class="text-center primary-color login-title">
+              RMNS Access
+          </mat-card-title>
+          <mat-card-content>
+
+              <form #loginForm="ngForm" (ngSubmit)="onSubmit()">
+
+                  <mat-form-field class="full-width">
+                      <input matInput type="text" id="username" placeholder="Username"
+                      [(ngModel)]="username" name="username" required pattern="[a-zA-Z0-9_,= ]*">
+                  </mat-form-field>
+
+                  <mat-form-field class="full-width">
+                      <input matInput type="password" id="password" placeholder="Password"
+                      [(ngModel)]="password" name="password" required>
+                  </mat-form-field>
+
+                  <small class="error-msg text-center">{{errorMsg}}</small>
+
+                  <div>
+                      <button mat-raised-button color="primary" class="full-width"
+                            type="submit" [disabled]="!loginForm.form.valid || isLoading"> Sign in </button>
+                  </div>
+
+              </form>
+
+              <div>
+                  <button mat-raised-button color="accent" class="full-width" (click)="doCancel()"> Cancel </button>
+              </div>
+
+          </mat-card-content>
+
+      </mat-card>
+
+  </div>
+</div>
