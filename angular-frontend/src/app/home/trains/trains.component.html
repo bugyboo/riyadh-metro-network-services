@@ -1,1 +1,143 @@
-<p>trains works!</p>
+<mat-card-title>Riyadh Metro Network Services</mat-card-title>
+<mat-card-subtitle>Edit, Add and Remove Routes, Stations, Trains and Trains Scheduals </mat-card-subtitle>
+<mat-card-content>
+
+    <h3>Trains</h3>
+    <p class="text-muted">
+        Please, select a route..
+    </p>
+    <div>
+        <div fxLayout="row" fxLayoutWrap>
+            <mat-form-field fxFlex="50%">
+                <mat-select placeholder="Route" required name="routeselect"
+                    [(ngModel)]="selectedRoute" (selectionChange)="doRouteSelectChange()">
+                    <mat-option *ngFor="let route of allRoutes" [value]="route.id">
+                      {{route.name}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+            <button mat-icon-button color="default" *ngIf="selectedRoute">
+                <mat-icon class="mat-primary"
+                      (click)="doEditRoute(selectedRoute)">mode_edit</mat-icon>
+            </button>
+        </div>
+        <div fxLayout="row" fxLayoutWrap>
+            <mat-form-field fxFlex="50%">
+                <mat-select placeholder="Train" required name="trainselect"
+                    [(ngModel)]="selectedTrain" (selectionChange)="doTrainSelectChange()">
+                    <mat-option *ngFor="let train of allTrains" [value]="train.trainId">
+                        Train {{train.trainId}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+            <button mat-icon-button color="default" *ngIf="selectedTrain">
+                <mat-icon class="mat-primary"
+                      (click)="doEditTrain(selectedTrain)">mode_edit</mat-icon>
+            </button>
+            <button mat-icon-button color="default" *ngIf="selectedTrain">
+                <mat-icon class="mat-accent"
+                      (click)="doDeleteTrain(selectedTrain)">clear</mat-icon>
+            </button>
+        </div>
+        <div fxLayout="row" fxLayoutWrap>
+            <mat-form-field fxFlex="50%">
+                <mat-select placeholder="Station" required name="stationselect"
+                    [(ngModel)]="selectedStation" (selectionChange)="doStationSelectChange()">
+                    <mat-option *ngFor="let station of allStations" [value]="station.id">
+                        {{station.stationCode}} - {{station.id}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+            <button mat-icon-button color="default" *ngIf="selectedStation">
+                <mat-icon class="mat-primary"
+                      (click)="doEditStation(selectedStation)">mode_edit</mat-icon>
+            </button>
+        </div>
+
+        <div>
+            <mat-table #table [dataSource]="dataSource">
+
+                <ng-container matColumnDef="timeId">
+                    <mat-header-cell *matHeaderCellDef fxFlex="10%" fxFlex.lt-sm="10%"> Time ID </mat-header-cell>
+                    <mat-cell *matCellDef="let element" fxFlex="10%" fxFlex.lt-sm="10%">
+                        {{element.timeId}}
+                    </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="timeType">
+                    <mat-header-cell *matHeaderCellDef fxFlex="15%"> Time Type </mat-header-cell>
+                    <mat-cell *matCellDef="let element" fxFlex="15%">
+                        {{element.timeType}} </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="stationId">
+                    <mat-header-cell *matHeaderCellDef fxFlex="10%" fxFlex.lt-sm="10%"> Station ID </mat-header-cell>
+                    <mat-cell *matCellDef="let element" fxFlex="10%" fxFlex.lt-sm="10%">
+                        {{element.stationId}} </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="hour">
+                    <mat-header-cell *matHeaderCellDef fxFlex="10%"> Hour </mat-header-cell>
+                    <mat-cell *matCellDef="let element" fxFlex="10%"> {{element.hour}} </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="minute">
+                    <mat-header-cell fxHide.lt-sm *matHeaderCellDef fxFlex="10%"> Minute </mat-header-cell>
+                    <mat-cell fxHide.lt-sm *matCellDef="let element" fxFlex="10%" ngClass="{{element.requestLevel}}">
+                        {{element.minute}}
+                    </mat-cell>
+                    </ng-container>
+
+                <ng-container matColumnDef="tripMinutes">
+                    <mat-header-cell *matHeaderCellDef fxFlex="10%" fxFlex.lt-sm="20%">
+                        Trip Minute
+                    </mat-header-cell>
+                    <mat-cell *matCellDef="let element" fxFlex="10%" fxFlex.lt-sm="20%">
+                        {{element.tripMinutes}}
+                    </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="forward">
+                    <mat-header-cell *matHeaderCellDef fxFlex="10%" fxFlex.lt-sm="20%">
+                        Forward
+                    </mat-header-cell>
+                    <mat-cell *matCellDef="let element" fxFlex="10%" fxFlex.lt-sm="20%">
+                        {{element.forward}}
+                    </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="actions">
+                    <mat-header-cell *matHeaderCellDef fxFlex="30%" fxFlex.lt-sm="20%">
+                        Actions
+                    </mat-header-cell>
+                    <mat-cell *matCellDef="let element" fxFlex="30%" fxFlex.lt-sm="20%">
+                        <button mat-icon-button color="default">
+                            <mat-icon class="mat-primary"
+                                  (click)="doEditTime(element)">mode_edit</mat-icon>
+                        </button>
+                        <button mat-icon-button color="default">
+                            <mat-icon class="mat-accent"
+                                  (click)="doDeleteTime(element.timeId)">clear</mat-icon>
+                        </button>
+                    </mat-cell>
+                </ng-container>
+
+                <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+            </mat-table>
+        </div>
+    </div>
+
+</mat-card-content>
+<mat-divider></mat-divider>
+<mat-card-actions>
+    <button mat-button color="primary" class="text-upper" (click)="doAddTrain()">
+        <mat-icon>add_box</mat-icon>
+        Add Train
+    </button>
+    <button mat-button color="primary" class="text-upper" (click)="doAddTime()">
+        <mat-icon>add_box</mat-icon>
+        Add Train Time
+    </button>
+</mat-card-actions>
+

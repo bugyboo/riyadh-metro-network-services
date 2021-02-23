@@ -1,0 +1,54 @@
+<div>
+  <h2 mat-dialog-title>Edit Route  Info</h2>
+  <mat-dialog-content>
+
+      <form #saveRouteForm="ngForm">
+
+          <div>
+              <mat-form-field fxFlex="50%">
+                  <input matInput placeholder="Route ID" required
+                     [(ngModel)]="data.id" name="id" disabled="true">
+              </mat-form-field>
+          </div>
+
+          <div>
+              <mat-form-field fxFlex="100%">
+                  <input matInput placeholder="Route Name" required
+                     [(ngModel)]="data.name" id="name" name="name">
+              </mat-form-field>
+          </div>
+
+          <div>
+              <mat-form-field fxFlex="100%">
+                  <input matInput placeholder="Arabic Name" required
+                     [(ngModel)]="data.nameArabic" id="nameArabic" name="nameArabic">
+              </mat-form-field>
+          </div>
+
+          <div>
+              <mat-form-field fxFlex="50%">
+                  <input matInput placeholder="Route Code" required
+                     [(ngModel)]="data.routeCode" id="code" name="code">
+              </mat-form-field>
+          </div>
+
+          <div>
+              <mat-form-field fxFlex="50%">
+                  <mat-select placeholder="Route Color" required
+                     [(ngModel)]="data.routeColor" name="color" id="color">
+                  <mat-option *ngFor="let c of routeColors" [value]="c">
+                    {{ c }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+          </div>
+
+      </form>
+
+  </mat-dialog-content>
+  <mat-dialog-actions>
+  <button mat-raised-button color="primary" [disabled]="!saveRouteForm.form.valid"
+          [mat-dialog-close]="data" tabindex="1">Save</button>
+  <button mat-raised-button mat-dialog-close tabindex="-1">Cancel</button>
+  </mat-dialog-actions>
+</div>

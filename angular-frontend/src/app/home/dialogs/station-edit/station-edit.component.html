@@ -1,0 +1,54 @@
+<div>
+  <h2 mat-dialog-title>Edit Station  Info</h2>
+  <mat-dialog-content>
+
+      <form #saveStationForm="ngForm">
+
+          <div>
+              <mat-form-field fxFlex="50%">
+                  <input matInput placeholder="Station ID" required
+                     [(ngModel)]="data.id" name="id" disabled="true">
+              </mat-form-field>
+          </div>
+
+          <div>
+              <mat-form-field fxFlex="100%">
+                  <input matInput placeholder="Station Name" required
+                     [(ngModel)]="data.name" id="name" name="name">
+              </mat-form-field>
+          </div>
+
+          <div>
+              <mat-form-field fxFlex="100%">
+                  <input matInput placeholder="Arabic Name" required
+                     [(ngModel)]="data.nameArabic" id="nameArabic" name="nameArabic">
+              </mat-form-field>
+          </div>
+
+          <div>
+              <mat-form-field fxFlex="50%">
+                  <input matInput placeholder="Station Code" required
+                     [(ngModel)]="data.stationCode" id="code" name="code">
+              </mat-form-field>
+          </div>
+
+          <div>
+              <mat-form-field fxFlex="50%">
+                  <mat-select placeholder="Station Type" required
+                     [(ngModel)]="data.stationType" name="stationType" id="stationType">
+                  <mat-option *ngFor="let t of stationTypes" [value]="t">
+                    {{ t }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+          </div>
+
+      </form>
+
+  </mat-dialog-content>
+  <mat-dialog-actions>
+  <button mat-raised-button color="primary" [disabled]="!saveStationForm.form.valid"
+          [mat-dialog-close]="data" tabindex="1">Save</button>
+  <button mat-raised-button mat-dialog-close tabindex="-1">Cancel</button>
+  </mat-dialog-actions>
+</div>

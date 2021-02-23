@@ -1,0 +1,29 @@
+<div>
+  <h2 mat-dialog-title>Edit Train Info</h2>
+  <mat-dialog-content>
+
+      <form #saveTrainForm="ngForm">
+
+          <div>
+              <mat-form-field fxFlex="50%">
+                  <input matInput placeholder="Train ID" required
+                     [(ngModel)]="data.trainId" name="trainId" [disabled]="isUpdate">
+              </mat-form-field>
+          </div>
+
+          <div>
+              <mat-form-field fxFlex="100%">
+                  <input matInput placeholder="Train Model" required
+                     [(ngModel)]="data.trainModel" id="trainModel" name="trainModel">
+              </mat-form-field>
+          </div>
+
+      </form>
+
+  </mat-dialog-content>
+  <mat-dialog-actions>
+  <button mat-raised-button color="primary" [disabled]="!saveTrainForm.form.valid"
+          [mat-dialog-close]="data" tabindex="1">Save</button>
+  <button mat-raised-button mat-dialog-close tabindex="-1">Cancel</button>
+  </mat-dialog-actions>
+</div>

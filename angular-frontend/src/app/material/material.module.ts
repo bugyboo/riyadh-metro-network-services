@@ -18,6 +18,7 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatMenuModule } from '@angular/material/menu';
+import { MatTableModule } from '@angular/material/table';
 
 @NgModule({
   declarations: [],
@@ -28,7 +29,7 @@ import { MatMenuModule } from '@angular/material/menu';
     MatListModule, MatIconModule, MatSnackBarModule, MatCardModule, MatFormFieldModule,
     MatExpansionModule, MatSelectModule, MatAutocompleteModule, MatInputModule,
     MatButtonModule, MatProgressBarModule, MatProgressSpinnerModule, MatDialogModule,
-    MatMenuModule
+    MatMenuModule, MatTableModule
   ],
   exports : [
     CovalentLayoutModule,
@@ -36,7 +37,7 @@ import { MatMenuModule } from '@angular/material/menu';
     MatListModule, MatIconModule, MatSnackBarModule, MatCardModule, MatFormFieldModule,
     MatExpansionModule, MatSelectModule, MatAutocompleteModule, MatInputModule,
     MatButtonModule, MatProgressBarModule, MatProgressSpinnerModule, MatDialogModule,
-    MatMenuModule
+    MatMenuModule, MatTableModule
   ]
 })
 export class MaterialModule { }

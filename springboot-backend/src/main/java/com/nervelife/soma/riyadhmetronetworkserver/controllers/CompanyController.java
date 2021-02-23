@@ -155,7 +155,10 @@ public class CompanyController {
 			
 			if ( s.isPresent() ) {
                 TrainTime tt = new TrainTime();
-                tt.setTimeId(trainTime.getTimeId());
+                if (trainTime.getTimeId() != null) {
+                    tt.setTimeId(trainTime.getTimeId());
+                }
+                tt.setTimeType(trainTime.getTimeType());
                 tt.setForward(trainTime.isForward());
                 tt.setHour(trainTime.getHour());
                 tt.setMinute(trainTime.getMinute());

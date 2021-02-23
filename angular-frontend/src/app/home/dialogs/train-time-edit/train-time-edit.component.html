@@ -1,0 +1,66 @@
+<div>
+  <h2 mat-dialog-title>Edit Train Time  Info</h2>
+  <mat-dialog-content>
+
+      <form #saveTrainTimeForm="ngForm">
+
+          <div>
+              <mat-form-field fxFlex="50%">
+                  <input matInput placeholder="Time ID" required
+                     [(ngModel)]="data.timeId" name="timeId" disabled="true">
+              </mat-form-field>
+          </div>
+
+          <div>
+              <mat-form-field fxFlex="100%">
+                  <mat-select placeholder="Time Type" required
+                     [(ngModel)]="data.timeType" name="timeType" id="timeType">
+                      <mat-option *ngFor="let t of timeTypes" [value]="t">
+                      {{ t }}
+                      </mat-option>
+                  </mat-select>
+              </mat-form-field>
+          </div>
+
+          <div>
+              <mat-form-field fxFlex="50%">
+                <mat-select placeholder="Hour" required
+                     [(ngModel)]="data.hour" name="houre" id="houre">
+                  <mat-option *ngFor="let h of hours" [value]="h">
+                    {{ h }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+              <mat-form-field fxFlex="50%">
+                  <input matInput placeholder="Minute" required
+                     [(ngModel)]="data.minute" id="minute" name="minute">
+              </mat-form-field>
+          </div>
+
+          <div>
+              <mat-form-field fxFlex="100%">
+                  <input matInput placeholder="Trip Time in Minutes" required
+                     [(ngModel)]="data.tripMinutes" id="tripMinutes" name="tripMinutes">
+              </mat-form-field>
+          </div>
+
+          <div>
+              <mat-form-field fxFlex="50%">
+                  <mat-select placeholder="Forward" required
+                     [(ngModel)]="data.forward" name="routeForward" id="routeForward">
+                  <mat-option *ngFor="let d of directions" [value]="d">
+                    {{ d }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+          </div>
+
+      </form>
+
+  </mat-dialog-content>
+  <mat-dialog-actions>
+  <button mat-raised-button color="primary" [disabled]="!saveTrainTimeForm.form.valid"
+          [mat-dialog-close]="data" tabindex="1">Save</button>
+  <button mat-raised-button mat-dialog-close tabindex="-1">Cancel</button>
+  </mat-dialog-actions>
+</div>

@@ -3,6 +3,7 @@ package com.nervelife.soma.riyadhmetronetworkserver.domain.presist;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Transient;
@@ -13,7 +14,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 public class TrainTime {
 	
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long timeId;
 	
 	@Column(length = 25)

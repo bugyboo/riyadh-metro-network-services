@@ -18,6 +18,12 @@ import { AgmCoreModule } from '@agm/core';
 import { LoginComponent } from './login/login.component';
 import { SaveUserDialogComponent } from './home/dialogs/save-user-dialog/save-user-dialog.component';
 import { DeleteUserDialogComponent } from './home/dialogs/delete-user-dialog/delete-user-dialog.component';
+import { TrainEditComponent } from './home/dialogs/train-edit/train-edit.component';
+import { TrainTimeEditComponent } from './home/dialogs/train-time-edit/train-time-edit.component';
+import { StationEditComponent } from './home/dialogs/station-edit/station-edit.component';
+import { RouteEditComponent } from './home/dialogs/route-edit/route-edit.component';
+import { DeleteComponent } from './home/dialogs/delete/delete.component';
+import { DistPipe } from './pipes/dist.pipe';
 
 @NgModule({
   declarations: [
@@ -28,7 +34,13 @@ import { DeleteUserDialogComponent } from './home/dialogs/delete-user-dialog/del
     UserManagerComponent,
     LoginComponent,
     SaveUserDialogComponent,
-    DeleteUserDialogComponent
+    DeleteUserDialogComponent,
+    TrainEditComponent,
+    TrainTimeEditComponent,
+    StationEditComponent,
+    RouteEditComponent,
+    DeleteComponent,
+    DistPipe
   ],
   imports: [
     BrowserModule,
