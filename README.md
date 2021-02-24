@@ -34,6 +34,7 @@ docker run -dp 8081:8081 --name rmns bugyboo/rmns-jdk11
 git clone https://github.com/bugyboo/riyadh-metro-network-services
 ```
 * CD into folder springboot-backend.
+* Run `mvn clean install`
 * Run `docker build -t rmns-jdk11:latest .`
 * Run `docker run -dp 8081:8081 --name rmns rmns-jdk11`
 
