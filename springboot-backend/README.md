@@ -10,7 +10,7 @@ This is the server project for RMNS
 ## Build
 
 * Run `mvn clean install`
-* Run `mvn spring-boot:run` OR `mvn appengine:run`
+* Run `mvn spring-boot:run`
 
 ## Docker
 * Run `docker build -t rmns-jdk11:latest .`
