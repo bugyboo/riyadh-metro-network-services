@@ -10,9 +10,9 @@
 	</parent>
 	<groupId>com.nervelife.soma</groupId>
 	<artifactId>riyadh-metro-network-server</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.1-milestone</version>
 	<name>RiyadhMetro Network Server</name>
-	<description>REST and API Server for RiyadhMetro Network</description>
+	<description>REST and API Server for Riyadh Metro Network Services</description>
 	<properties>
 		<java.version>11</java.version>
 	</properties>
